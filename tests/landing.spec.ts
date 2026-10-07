@@ -156,3 +156,35 @@ test.describe('motion', () => {
     await expect(page.locator('footer')).toHaveCSS('opacity', '1')
   })
 })
+
+test.describe('head', () => {
+  test('favicon is linked and served as SVG', async ({ page, request }) => {
+    await page.goto('/')
+    await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg')
+    const res = await request.get('/favicon.svg')
+    expect(res.status()).toBe(200)
+    expect(res.headers()['content-type']).toContain('image/svg+xml')
+  })
+
+  test('theme-color is set for light and dark', async ({ page }) => {
+    await page.goto('/')
+    await expect(
+      page.locator('meta[name="theme-color"][media="(prefers-color-scheme: light)"]')
+    ).toHaveAttribute('content', '#FBFBFA')
+    await expect(
+      page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]')
+    ).toHaveAttribute('content', '#111110')
+  })
+
+  test('description and open graph tags match the intro', async ({ page }) => {
+    await page.goto('/')
+    const intro =
+      'A small software lab. We build developer tools and productivity apps — few of them, carefully.'
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', intro)
+    await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', intro)
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+      'content',
+      'Zincer — a small software lab'
+    )
+  })
+})
