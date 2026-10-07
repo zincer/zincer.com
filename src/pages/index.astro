@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+interface Fact {
+  label: string
+  value: string
+  href?: string
+}
+
+const title = 'Zincer — a small software lab'
+const intro =
+  'A small software lab. We build developer tools and productivity apps — few of them, carefully.'
+
+const facts: Fact[] = [
+  { label: 'makes', value: 'dev tools, productivity apps' },
+  { label: 'since', value: '2026' },
+  { label: 'contact', value: 'contact@zincer.com', href: 'mailto:contact@zincer.com' },
+  { label: 'code', value: 'github.com/zincer', href: 'https://github.com/zincer/' },
+]
+---
+
+<BaseLayout title={title} description={intro}>
+  <div class="page">
+    <main>
+      <header class="intro reveal" style="--i: 0">
+        <h1 class="name">zincer<span class="caret" aria-hidden="true"></span></h1>
+        <p class="lede">{intro}</p>
+      </header>
+
+      <section class="facts reveal" style="--i: 1" aria-label="About Zincer">
+        <hr class="rule" />
+        <dl>
+          {
+            facts.map(({ label, value, href }) => (
+              <>
+                <dt>{label}</dt>
+                <dd>{href ? <a href={href}>{value}</a> : value}</dd>
+              </>
+            ))
+          }
+        </dl>
+        <hr class="rule" />
+      </section>
+    </main>
+
+    <footer class="foot reveal" style="--i: 2">© 2026 Zincer</footer>
+  </div>
+</BaseLayout>
