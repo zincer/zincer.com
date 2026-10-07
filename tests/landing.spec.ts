@@ -4,7 +4,7 @@ test.describe('content', () => {
   test('loads with title and accessible heading', async ({ page }) => {
     const response = await page.goto('/')
     expect(response?.status()).toBe(200)
-    await expect(page).toHaveTitle('Zincer — a small software lab')
+    await expect(page).toHaveTitle('Zincer — an independent software studio')
     await expect(page.getByRole('heading', { level: 1, name: 'zincer', exact: true })).toBeVisible()
   })
 
@@ -15,9 +15,10 @@ test.describe('content', () => {
 
   test('intro copy is exact', async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('.intro p')).toHaveText(
-      'A small software lab. We build developer tools and productivity apps — few of them, carefully.'
-    )
+    await expect(page.locator('.intro p')).toHaveText([
+      'An independent software studio. We build developer tools and productivity apps — few of them, carefully.',
+      'Each one starts as something we wanted for our own work, and ships only when it feels finished: fast, quiet, and careful with your data.',
+    ])
   })
 
   test('facts list has the four rows in order', async ({ page }) => {
@@ -42,7 +43,7 @@ test.describe('content', () => {
 
   test('footer present and zero client scripts', async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('footer')).toHaveText('© 2026 Zincer')
+    await expect(page.locator('footer')).toHaveText('© 2026 Zincer · Made in Vietnam')
     await expect(page.locator('script')).toHaveCount(0)
   })
 })
@@ -51,13 +52,19 @@ const noHorizontalOverflow = () =>
   document.documentElement.scrollWidth <= window.innerWidth
 
 test.describe('layout', () => {
-  test('fits one phone screen at 375x667 with no overflow', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 })
+  test('fits one modern phone screen at 390x844 with no overflow', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
     await page.goto('/')
     expect(await page.evaluate(noHorizontalOverflow)).toBe(true)
     expect(
       await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight)
     ).toBe(true)
+  })
+
+  test('no horizontal overflow at 375x667', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 })
+    await page.goto('/')
+    expect(await page.evaluate(noHorizontalOverflow)).toBe(true)
   })
 
   test('no horizontal overflow at 320x568', async ({ page }) => {
@@ -179,12 +186,12 @@ test.describe('head', () => {
   test('description and open graph tags match the intro', async ({ page }) => {
     await page.goto('/')
     const intro =
-      'A small software lab. We build developer tools and productivity apps — few of them, carefully.'
+      'An independent software studio. We build developer tools and productivity apps — few of them, carefully.'
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', intro)
     await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', intro)
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       'content',
-      'Zincer — a small software lab'
+      'Zincer — an independent software studio'
     )
   })
 })

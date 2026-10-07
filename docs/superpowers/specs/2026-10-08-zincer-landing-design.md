@@ -1,10 +1,10 @@
 # Zincer Landing Page — Design Spec
 
-> Date: 2026-10-08 · Status: approved, revised for Astro (rev 2) · Direction: B "Monospace index"
+> Date: 2026-10-08 · Status: approved, rev 4 (Astro; copy update) · Direction: B "Monospace index"
 
 ## 1. Purpose
 
-A studio calling card for Zincer, a small software lab that builds developer tools and productivity apps. Success: a visitor (developer, potential collaborator) reads it in under ten seconds and comes away with "these people have taste," and can reach the lab by email or GitHub.
+A studio calling card for Zincer, an independent software studio that builds developer tools and productivity apps. Success: a visitor (developer, potential collaborator) reads it in under ten seconds and comes away with "these people have taste," and can reach the lab by email or GitHub.
 
 **Out of scope:** product listings (Dono or others), principles/manifesto, newsletter capture, analytics, a theme toggle, OG image. Products will be added in a later iteration. **A blog is out of scope for this iteration, but the structure must make adding one later a content-only change** (see §7).
 
@@ -16,14 +16,16 @@ Studio landing page for developers and makers, with a quiet monospace / README-l
 
 ```
 zincer▍
-A small software lab. We build developer tools and productivity apps — few of them, carefully.
+An independent software studio. We build developer tools and productivity apps — few of them, carefully.
+
+Each one starts as something we wanted for our own work, and ships only when it feels finished: fast, quiet, and careful with your data.
 ────────────────
 makes     dev tools, productivity apps
 since     2026
 contact   contact@zincer.com          → mailto:contact@zincer.com
 code      github.com/zincer           → https://github.com/zincer/
 ────────────────
-© 2026 Zincer
+© 2026 Zincer · Made in Vietnam
 ```
 
 - `zincer` is the page's `<h1>`; the caret is decorative (`aria-hidden="true"`).
@@ -32,7 +34,7 @@ code      github.com/zincer           → https://github.com/zincer/
 
 ## 4. Layout
 
-- Single viewport (`min-height: 100dvh`), no scroll on desktop or on a 375×667 phone.
+- Single viewport (`min-height: 100dvh`) on a 390×844 phone and on desktop; smaller phones (e.g. 375×667) scroll vertically but never horizontally. (Rev 4: the two-paragraph intro no longer fits 375×667.)
 - One left-aligned column, `max-width: 34rem`, anchored upper-left: padding `clamp(16px, 9vw, 128px)` inline, `clamp(48px, 12vh, 140px)` top.
 - Vertical rhythm: intro sits `1.5rem` below the name; each divider has `2rem` space above and below.
 - `<dl>` is a two-column grid: label column `7.5rem` on desktop, `5.5rem` below 480px; row gap `0.35rem`.
@@ -93,7 +95,7 @@ landing/
 
 **Why this split:** `BaseLayout` takes `title` and `description` props, so a future `src/pages/blog/*` or content collection reuses the same head, fonts, tokens and dark mode without touching the landing page. Page-specific layout stays scoped inside `index.astro`.
 
-**Head metadata (in `BaseLayout`):** `<html lang="en">`, charset, viewport, `<title>{title}</title>`, meta description, `og:title`, `og:description`, `og:type=website`, `theme-color` for light and dark, `<link rel="icon" type="image/svg+xml" href="/favicon.svg">`, `<link rel="preload">` for both font files. Landing title: `Zincer — a small software lab`; description: the intro sentence.
+**Head metadata (in `BaseLayout`):** `<html lang="en">`, charset, viewport, `<title>{title}</title>`, meta description, `og:title`, `og:description`, `og:type=website`, `theme-color` for light and dark, `<link rel="icon" type="image/svg+xml" href="/favicon.svg">`, `<link rel="preload">` for both font files. Landing title: `Zincer — an independent software studio`; description: the first intro paragraph.
 
 ## 8. Testing & verification
 
@@ -101,7 +103,7 @@ Playwright (`tests/landing.spec.ts`), run against the production build served by
 
 1. Page loads with status 200; `h1` text is `zincer`; title matches.
 2. Contact link `href` is `mailto:contact@zincer.com`; code link `href` is `https://github.com/zincer/`.
-3. At 375×667 and 320×568: `document.documentElement.scrollWidth <= innerWidth` (no horizontal overflow) and content fits without vertical scroll at 375×667.
+3. At 375×667 and 320×568 (and 390×844): `document.documentElement.scrollWidth <= innerWidth` (no horizontal overflow) and content fits without vertical scroll at 390×844.
 4. With `colorScheme: 'dark'`, body background computes to `rgb(17, 17, 16)`.
 5. With `reducedMotion: 'reduce'`, the caret's `animation-name` is `none`.
 6. Both font files return 200 and `document.fonts.check('15px "Geist Mono"')` is true after load.
@@ -115,4 +117,4 @@ Manual: Lighthouse accessibility ≥ 95 and performance ≥ 95 (mobile); screens
 ## 10. Risks
 
 - Geist Mono `woff2` must be obtained from the official Vercel `geist-font` release; if unavailable offline, the fallback stack renders acceptably but the look shifts toward SF Mono.
-- "No vertical scroll at 375×667" may fail if copy grows; copy changes should re-run test 3.
+- "No vertical scroll at 390×844" has no headroom (exactly 844px with Geist Mono); any copy growth will fail it; copy changes should re-run test 3.
