@@ -188,3 +188,16 @@ test.describe('head', () => {
     )
   })
 })
+
+test.describe('paint', () => {
+  test('first contentful paint is recorded with motion enabled', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto('/')
+    await expect
+      .poll(() =>
+        page.evaluate(() => performance.getEntriesByName('first-contentful-paint').length)
+      )
+      .toBe(1)
+    await expect(page.locator('footer')).toHaveCSS('opacity', '1')
+  })
+})

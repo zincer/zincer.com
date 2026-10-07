@@ -60,7 +60,7 @@ All text/background pairs must meet WCAG AA (4.5:1). Verified ratios: light — 
 
 ## 6. Motion
 
-- On load, the column fades in with `translateY(8px) → 0`, `opacity 0 → 1`, `600ms cubic-bezier(0.16, 1, 0.3, 1)`; three groups (name+intro, list, footer) staggered by `80ms`. Pure CSS keyframes.
+- On load, the name and intro render immediately (no animation, so first paint is the heading); the list and footer fade in with `translateY(8px) → 0`, `opacity 0 → 1`, `600ms cubic-bezier(0.16, 1, 0.3, 1)`, staggered `80ms` and `160ms`. Pure CSS keyframes. (Rev 3: animating the intro from `opacity: 0` prevented Chromium from recording first contentful paint at all.)
 - Caret: block `0.6em × 1.1em` in `--ink`, blinks with `steps(1)` on a `1.1s` cycle.
 - `@media (prefers-reduced-motion: reduce)`: no fade, no blink; caret solid.
 - Only `opacity` and `transform` are animated.
