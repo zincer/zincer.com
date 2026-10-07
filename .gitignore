@@ -6,3 +6,4 @@ playwright-report/
 screenshots/
 .superpowers/
 .DS_Store
+mise.local.toml

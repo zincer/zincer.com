@@ -208,3 +208,11 @@ test.describe('paint', () => {
     await expect(page.locator('footer')).toHaveCSS('opacity', '1')
   })
 })
+
+test.describe('deploy', () => {
+  test('CNAME points GitHub Pages at zincer.com', async ({ request }) => {
+    const res = await request.get('/CNAME')
+    expect(res.status()).toBe(200)
+    expect((await res.text()).trim()).toBe('zincer.com')
+  })
+})

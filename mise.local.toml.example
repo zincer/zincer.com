@@ -1,0 +1,7 @@
+# Copy to mise.local.toml (gitignored) and fill in a token for the GitHub
+# account behind the `github.com-ntnthien` SSH alias. gh and the GitHub API
+# read GH_TOKEN automatically, but only inside this directory.
+#   cp mise.local.toml.example mise.local.toml && mise trust
+
+[env]
+GH_TOKEN = "github_pat_replace_me"

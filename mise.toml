@@ -1,0 +1,18 @@
+# Toolchain and tasks for the Zincer landing page.
+# Put secrets (GH_TOKEN for the zincer GitHub account) in mise.local.toml, which is gitignored.
+# See mise.local.toml.example.
+
+[tools]
+node = "24"
+
+[tasks.dev]
+description = "Start the Astro dev server"
+run = "npm run dev"
+
+[tasks.build]
+description = "Build the static site into dist/"
+run = "npm run build"
+
+[tasks.test]
+description = "Build, preview and run the Playwright suite"
+run = "npm test"
