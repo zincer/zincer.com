@@ -1,0 +1,92 @@
+/* Fonts */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tokens */
+:root {
+  color-scheme: light dark;
+  --bg: #FBFBFA;
+  --text: #2F3437;
+  --ink: #111111;
+  --muted: #6F6E6A;
+  --rule: #EAEAEA;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(16px, 9vw, 128px);
+  --top: clamp(48px, 12vh, 140px);
+  --column: 34rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111110;
+    --text: #D9D8D4;
+    --ink: #EDECE8;
+    --muted: #8A8984;
+    --rule: #262624;
+  }
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 150ms ease;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration-color: var(--ink);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

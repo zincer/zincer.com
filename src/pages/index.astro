@@ -46,3 +46,58 @@ const facts: Fact[] = [
     <footer class="foot reveal" style="--i: 2">© 2026 Zincer</footer>
   </div>
 </BaseLayout>
+
+<style>
+  .page {
+    padding: var(--top) var(--gutter);
+  }
+
+  .page > * {
+    max-width: var(--column);
+  }
+
+  .name {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .lede {
+    margin: 1.5rem 0 0;
+  }
+
+  .rule {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .facts dl {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    row-gap: 0.35rem;
+    margin: 0;
+  }
+
+  @media (max-width: 479.98px) {
+    .facts dl {
+      grid-template-columns: 5.5rem 1fr;
+    }
+  }
+
+  .facts dt {
+    color: var(--muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .foot {
+    color: var(--muted);
+  }
+</style>
