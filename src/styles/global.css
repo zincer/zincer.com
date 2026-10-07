@@ -90,3 +90,21 @@ a:focus-visible {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* Shared motion */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -134,3 +134,25 @@ test.describe('keyboard', () => {
     await expect(page.locator(':focus')).toHaveAttribute('href', 'https://github.com/zincer/')
   })
 })
+
+test.describe('motion', () => {
+  test('caret blinks and groups reveal with stagger', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto('/')
+    const caret = page.locator('.caret')
+    await expect(caret).toHaveCSS('animation-name', 'blink')
+    await expect(caret).toHaveCSS('animation-duration', '1.1s')
+    await expect(page.locator('.facts')).toHaveCSS('animation-name', 'reveal')
+    await expect(page.locator('.facts')).toHaveCSS('animation-delay', '0.08s')
+    await expect(page.locator('footer')).toHaveCSS('animation-delay', '0.16s')
+  })
+
+  test('reduced motion disables all animation and keeps the caret solid', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+    await expect(page.locator('.caret')).toHaveCSS('animation-name', 'none')
+    await expect(page.locator('.caret')).toHaveCSS('opacity', '1')
+    await expect(page.locator('.intro')).toHaveCSS('animation-name', 'none')
+    await expect(page.locator('footer')).toHaveCSS('opacity', '1')
+  })
+})

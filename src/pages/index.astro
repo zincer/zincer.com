@@ -100,4 +100,26 @@ const facts: Fact[] = [
   .foot {
     color: var(--muted);
   }
+
+  .caret {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    margin-left: 0.15em;
+    vertical-align: -0.2em;
+    background: var(--ink);
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  .reveal {
+    animation: reveal 600ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caret,
+    .reveal {
+      animation: none;
+    }
+  }
 </style>
